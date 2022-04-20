@@ -22,6 +22,7 @@ public class CreatePostGUI extends JFrame{
     private JComboBox comboBoxHour;
     private JTextArea textAreaRequest;
     private JComboBox comboBoxReward;
+    private JPanel panelrequest;
 
 
     public CreatePostGUI(UserGUI userGUI,User user){
@@ -35,29 +36,22 @@ public class CreatePostGUI extends JFrame{
         setResizable(false);
         AAFunctions.setScreen(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AAFunctions.setIcon(this);
         setVisible(true);
         buttonCreatePost.addActionListener(e -> {
             if(textAreaRequest.getText().trim().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Tüm alanları doldurduğunuza emin olun");
             }
             else{
+                int reward = Integer.parseInt(Objects.requireNonNull(comboBoxReward.getSelectedItem()).toString());
                 String location = Objects.requireNonNull(comboBoxLocation.getSelectedItem()).toString();
+                String request = textAreaRequest.getText();
                 int year = Integer.parseInt(Objects.requireNonNull(comboBoxYear.getSelectedItem()).toString());
                 int month = Integer.parseInt(Objects.requireNonNull(comboBoxMonth.getSelectedItem()).toString());
                 int day = Integer.parseInt(Objects.requireNonNull(comboBoxDay.getSelectedItem()).toString());
                 int hour = Integer.parseInt(Objects.requireNonNull(comboBoxHour.getSelectedItem()).toString());
-                String request = textAreaRequest.getText();
-                int reward = Integer.parseInt(Objects.requireNonNull(comboBoxReward.getSelectedItem()).toString());
                 LocalDateTime deadline = LocalDateTime.of(year,month,day,hour,0);
-                try{
-                    if(user.createPost(location, request, Timestamp.valueOf(deadline), reward)){
-                        userGUI.setModelOpenPosts();
-                        userGUI.setModelMyPosts();
-                        dispose();
-                    }
-                }catch (Exception exception){
-                    System.out.println(exception.getMessage());
-                }
+                user.createPost(location, request, deadline, reward);
             }
         });
         buttonLogout.addActionListener(e -> dispose());

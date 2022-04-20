@@ -1,5 +1,6 @@
 package com.commun.MODELS;
 
+import com.commun.AAHELPER.AAFunctions;
 import com.commun.AAHELPER.DBConnection;
 
 import javax.swing.*;
@@ -8,9 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.commun.MODELS.User.existsById;
 
 public class Post {
 
@@ -110,6 +112,32 @@ public class Post {
         this.rating = rating;
     }
 
+    //####################################################################################################3
+
+    public static Post getByPostId(int postId){
+        String sql = "select from posts where postid = ?";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setInt(1, postId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            Post post = new Post();
+            post.setPostId(resultSet.getInt("postid"));
+            post.setPosterId(resultSet.getInt("posterid"));
+            post.setLocation(resultSet.getString("location"));
+            post.setRequest(resultSet.getString("request"));
+            post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            post.setReward(resultSet.getInt("reward"));
+            post.setClaimerId(resultSet.getInt("claimerid"));
+            post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+            post.setRating(resultSet.getInt("rating"));
+            preparedStatement.close();
+            return post;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static List<Post> getAllPosts(){
         List<Post> allPosts = new ArrayList<>();
@@ -129,6 +157,7 @@ public class Post {
                 post.setCompleted(resultSet.getString("completed").equals("true"));
                 allPosts.add(post);
             }
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,51 +166,143 @@ public class Post {
 
     public static List<Post> getOpenPosts(){
         List<Post> openPosts = new ArrayList<>();
-        for(Post post: getAllPosts()){
-            if(post.getClaimerId() <= 0){
+        String query = "select * from posts where claimerid = 0";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("postid"));
+                post.setPosterId(resultSet.getInt("posterid"));
+                post.setRequest(resultSet.getString("request"));
+                post.setLocation(resultSet.getString("location"));
+                post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                post.setReward(resultSet.getInt("reward"));
+                post.setClaimerId(resultSet.getInt("claimerid"));
+                post.setCompleted(resultSet.getString("completed").equals("true"));
+                post.setRating(resultSet.getInt("rating"));
                 openPosts.add(post);
             }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return openPosts;
     }
 
-    public static boolean existsById(int postId){
-        for(Post post:getAllPosts()){
-            if(post.getPostId() == postId){
-                return true;
+    public static List<Post> getOpenPostsByPosterId(int userid){
+        List<Post> openPosts = new ArrayList<>();
+        String sql = "select * from posts where (userid = ? and completed = ?)";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setInt(1, userid);
+            preparedStatement.setString(2, "false");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("postid"));
+                post.setPosterId(resultSet.getInt("posterid"));
+                post.setLocation(resultSet.getString("location"));
+                post.setRequest(resultSet.getString("request"));
+                post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                post.setReward(resultSet.getInt("reward"));
+                post.setClaimerId(resultSet.getInt("claimerid"));
+                post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+                post.setRating(resultSet.getInt("rating"));
+                openPosts.add(post);
             }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Kullanıcı açık ilanlarında SQL hatası");
+            e.printStackTrace();
         }
-        return false;
+        return openPosts;
     }
 
     public static List<Post> getByPosterId(int posterId){
         List<Post> posts = new ArrayList<>();
-        for(Post post:getAllPosts()){
-            if(post.getPosterId()==posterId){
+        String sql = "select * from posts where (posterid = ?)";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setInt(1, posterId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("postid"));
+                post.setPosterId(resultSet.getInt("posterid"));
+                post.setLocation(resultSet.getString("location"));
+                post.setRequest(resultSet.getString("request"));
+                post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                post.setReward(resultSet.getInt("reward"));
+                post.setClaimerId(resultSet.getInt("claimerid"));
+                post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+                post.setRating(resultSet.getInt("rating"));
                 posts.add(post);
             }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Kullanıcı açık ilanlarında SQL hatası");
+            e.printStackTrace();
         }
         return posts;
     }
 
     public static List<Post> getByClaimerId(int claimerId){
         List<Post> posts = new ArrayList<>();
-        for(Post post:getAllPosts()){
-            if(post.getClaimerId()==claimerId){
+        String sql = "select * from posts where (claimerid= ? and completed = ?)";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setInt(1, claimerId);
+            preparedStatement.setString(2, "false");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("postid"));
+                post.setPosterId(resultSet.getInt("posterid"));
+                post.setLocation(resultSet.getString("location"));
+                post.setRequest(resultSet.getString("request"));
+                post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                post.setReward(resultSet.getInt("reward"));
+                post.setClaimerId(resultSet.getInt("claimerid"));
+                post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+                post.setRating(resultSet.getInt("rating"));
                 posts.add(post);
             }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Kullanıcı açık ilanlarında SQL hatası");
+            e.printStackTrace();
         }
         return posts;
     }
 
-    public static Post getByPostId(int postId){
-        Post post = null;
-        for(Post anyPost: getAllPosts()){
-            if(anyPost.getPostId() == postId){
-                post = anyPost;
+    public static List<Post> getByLocation(String location){
+        List<Post> posts = new ArrayList<>();
+        String sql = "select * from posts where (location = ? and completed = ?)";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setString(1, location);
+            preparedStatement.setString(2, "false");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Post post = new Post();
+                post.setPostId(resultSet.getInt("postid"));
+                post.setPosterId(resultSet.getInt("posterid"));
+                post.setLocation(resultSet.getString("location"));
+                post.setRequest(resultSet.getString("request"));
+                post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                post.setReward(resultSet.getInt("reward"));
+                post.setClaimerId(resultSet.getInt("claimerid"));
+                post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+                post.setRating(resultSet.getInt("rating"));
+                posts.add(post);
             }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Kullanıcı açık ilanlarında SQL hatası");
+            e.printStackTrace();
         }
-        return post;
+        return posts;
     }
 
     public static List<Post> getFilteredPosts(String location, int minPrice, int maxPrice){
@@ -189,39 +310,72 @@ public class Post {
         if(location.equalsIgnoreCase("hepsi") && minPrice == 0 && maxPrice == 0){
             return getOpenPosts();
         }
-        else if(location.equalsIgnoreCase("hepsi")){
-            for(Post post: getOpenPosts()){
-                if(post.getReward() >= minPrice && post.getReward() <= maxPrice){
-                    filteredposts.add(post);
-                }
-            }
-        }
         else if(minPrice == 0 && maxPrice == 0){
-            for(Post post: getOpenPosts()){
-                if(post.getLocation().equalsIgnoreCase(location)){
+            return getByLocation(location);
+        }
+        else if(location.equalsIgnoreCase("hepsi")){
+            String sql = "select * posts where (reward >= ? and reward <= ?)";
+            try {
+                PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+                preparedStatement.setInt(1, minPrice);
+                preparedStatement.setInt(2, maxPrice);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    Post post = new Post();
+                    post.setPostId(resultSet.getInt("postid"));
+                    post.setPosterId(resultSet.getInt("posterid"));
+                    post.setLocation(resultSet.getString("location"));
+                    post.setRequest(resultSet.getString("request"));
+                    post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                    post.setReward(resultSet.getInt("reward"));
+                    post.setClaimerId(resultSet.getInt("claimerid"));
+                    post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+                    post.setRating(resultSet.getInt("rating"));
                     filteredposts.add(post);
                 }
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         else{
-            for(Post post:getOpenPosts()){
-                if(post.getLocation().equals(location) && post.getReward() >= minPrice && post.getReward() <= maxPrice){
+            String sql = "select * from posts where location = ? and reward >= ? and reward <= ?";
+            try {
+                PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+                preparedStatement.setString(1, location);
+                preparedStatement.setInt(2, minPrice);
+                preparedStatement.setInt(3, maxPrice);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    Post post = new Post();
+                    post.setPostId(resultSet.getInt("postid"));
+                    post.setPosterId(resultSet.getInt("posterid"));
+                    post.setLocation(resultSet.getString("location"));
+                    post.setRequest(resultSet.getString("request"));
+                    post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+                    post.setReward(resultSet.getInt("reward"));
+                    post.setClaimerId(resultSet.getInt("claimerid"));
+                    post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
                     filteredposts.add(post);
                 }
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         return filteredposts;
     }
 
-    public void delete(){
-        if(!existsById(postId)){
-            JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır.");
+    public void updateDeadlineOnDB(LocalDateTime newDeadline){
+        if(!existsById(getPostId())){
+            JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
-            String query = "delete from posts where postid = ?";
+            String query = "update posts set deadline = ? where postid = ?";
             try {
                 PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
-                preparedStatement.setInt(1, postId);
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(newDeadline));
+                preparedStatement.setInt(2, getPostId());
                 preparedStatement.execute();
                 preparedStatement.close();
             } catch (SQLException e) {
@@ -230,8 +384,8 @@ public class Post {
         }
     }
 
-    public void  updateReward(int newReward){
-        if(!existsById(postId)){
+    public void  updateRewardOnDB(int newReward){
+        if(!existsById(getPostId())){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
@@ -239,7 +393,7 @@ public class Post {
             try {
                 PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
                 preparedStatement.setInt(1, newReward);
-                preparedStatement.setInt(2, postId);
+                preparedStatement.setInt(2, getPostId());
                 preparedStatement.execute();
                 preparedStatement.close();
             } catch (SQLException e) {
@@ -248,8 +402,8 @@ public class Post {
         }
     }
 
-    public void updateRequest(String newRequest){
-        if(!existsById(postId)){
+    public void updateRequestOnDB(String newRequest){
+        if(!existsById(getPostId())){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
@@ -257,7 +411,7 @@ public class Post {
             try {
                 PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
                 preparedStatement.setString(1, newRequest);
-                preparedStatement.setInt(2, postId);
+                preparedStatement.setInt(2, getPostId());
                 preparedStatement.execute();
                 preparedStatement.close();
             } catch (SQLException e) {
@@ -301,7 +455,24 @@ public class Post {
         }
     }
 
-    public static void deletePostsByDate(){
+    public void delete(){
+        if(getByPostId(postId) == null){
+            JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır.");
+        }
+        else{
+            String query = "delete from posts where postid = ?";
+            try {
+                PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
+                preparedStatement.setInt(1, postId);
+                preparedStatement.execute();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void deletePastDuePosts(){
         String query = "delete from posts where deadline < ?";
         try {
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);

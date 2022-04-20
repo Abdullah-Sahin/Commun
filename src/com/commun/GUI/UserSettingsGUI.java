@@ -4,8 +4,6 @@ import com.commun.AAHELPER.AAFunctions;
 import com.commun.MODELS.User;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class UserSettingsGUI extends JFrame{
 
@@ -35,7 +33,13 @@ public class UserSettingsGUI extends JFrame{
         setResizable(false);
         AAFunctions.setScreen(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AAFunctions.setIcon(this);
         setVisible(true);
+
+
+
+        // Listeners start from here
+
         buttonLogout.addActionListener(e -> dispose());
         buttonSubmitChanges.addActionListener(e -> {
             if(textFieldUserPassword.getText().trim().length() < 8){
@@ -44,14 +48,13 @@ public class UserSettingsGUI extends JFrame{
             else{
                 user.setPassword(textFieldUserPassword.getText().trim());
                 setTextFieldUserPassword();
-                if(user.updatePassword()){
+                if(user.updatePasswordOnDB()){
                     dispose();
                 }
             }
         });
-        buttonDeleteUser.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        buttonDeleteUser.addActionListener(e -> {
+            if(JOptionPane.showConfirmDialog(null,"Hesabınızı silmek istediğinize emin misiniz?") == 0){
                 if(user.delete()){
                     new LoginGUI();
                     dispose();

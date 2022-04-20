@@ -6,6 +6,8 @@ import com.commun.MODELS.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,11 +51,14 @@ public class UserGUI extends JFrame{
     private JComboBox comboBoxRating;
     private JLabel labelRewards;
     private JLabel labelPlaces;
+    private JLabel labelRating;
+    private JButton buttonWithdraw;
+    private JLabel labelPostID;
 
     public UserGUI(User user){
         this.user = user;
         add(panelMain);
-        Post.deletePostsByDate();
+        Post.deletePastDuePosts();
         labelWelcome.setText("Commun'a Hoşgeldin " + user.getUsername() + ". Kullanıcı ID: " + user.getUserid());
         setTextFieldUserCoin();
 
@@ -103,7 +108,7 @@ public class UserGUI extends JFrame{
 
         tableMyJobs.getSelectionModel().addListSelectionListener(e -> {
             try{
-                textFieldChosenDutyId.setText("Seçilen ilan ID: " + tableMyJobs.getValueAt(tableMyJobs.getSelectedRow(),0).toString());
+                textFieldChosenDutyId.setText(tableMyJobs.getValueAt(tableMyJobs.getSelectedRow(),0).toString());
             }catch (Exception ignored){
 
             }
@@ -114,7 +119,13 @@ public class UserGUI extends JFrame{
         setResizable(false);
         AAFunctions.setScreen(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AAFunctions.setIcon(this);
         setVisible(true);
+
+
+
+
+        //Listeners start from here
         buttonLogout.addActionListener(e -> {
             new LoginGUI();
             dispose();
@@ -122,7 +133,7 @@ public class UserGUI extends JFrame{
         buttonUserSettings.addActionListener(e -> new UserSettingsGUI(this, user));
         buttonCreatePost.addActionListener(e -> new CreatePostGUI(this, user));
         buttonUpdate.addActionListener(e -> {
-            Post.deletePostsByDate();
+            Post.deletePastDuePosts();
             setModelOpenPosts();
             setModelMyPosts();
             setModelMyJobs();
@@ -181,6 +192,14 @@ public class UserGUI extends JFrame{
 
             }
 
+        });
+        buttonWithdraw.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                user.withdrawClaimByPostId(Integer.parseInt(textFieldChosenDutyId.getText()));
+                setModelOpenPosts();
+                setModelMyJobs();
+            }
         });
     }
 
@@ -254,5 +273,9 @@ public class UserGUI extends JFrame{
 
     public void setTextFieldUserCoin(){
         textFieldUserCoin.setText("Mevcut coin " + user.getCoins());
+    }
+
+    public User getUser() {
+        return user;
     }
 }

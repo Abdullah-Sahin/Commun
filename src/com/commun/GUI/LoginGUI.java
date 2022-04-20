@@ -1,16 +1,18 @@
 package com.commun.GUI;
 
 import com.commun.AAHELPER.AAFunctions;
+import com.commun.AAHELPER.MailSender;
 import com.commun.MODELS.User;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class LoginGUI extends JFrame{
     private JPanel panelMain;
     private JLabel labelWelcome;
     private JLabel labelNewUserName;
     private JTextField textFieldNewUserName;
-    private JLabel labelNewUserPassword;
+    private JLabel labelNewUserEmail;
     private JPasswordField passwordFieldNewUserPassword;
     private JButton buttonSignUp;
     private JPanel panelTop;
@@ -21,6 +23,13 @@ public class LoginGUI extends JFrame{
     private JPasswordField passwordFieldUserPassword;
     private JLabel labelRegister;
     private JButton buttonLogin;
+    private JPanel panelMid;
+    private JTextField textFieldForgottenPasswordEmail;
+    private JButton buttonRequestNewPassword;
+    private JLabel labelForgotPassword;
+    private JLabel labelAskEmail;
+    private JLabel labelNewUserPass;
+    private JTextField textFieldNewUserEmail;
 
     public LoginGUI() {
         add(panelMain);
@@ -29,7 +38,10 @@ public class LoginGUI extends JFrame{
         setResizable(false);
         AAFunctions.setScreen(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AAFunctions.setIcon(this);
         setVisible(true);
+
+
         buttonLogin.addActionListener(e -> {
             String userName = textFieldUserName.getText();
             String password = passwordFieldUserPassword.getText();
@@ -50,15 +62,48 @@ public class LoginGUI extends JFrame{
                 passwordFieldUserPassword.setText(null);
             }
         });
+
+
         buttonSignUp.addActionListener(e -> {
             String userName = textFieldNewUserName.getText();
+            String email = textFieldNewUserEmail.getText();
             String password = passwordFieldNewUserPassword.getText();
-            if(User.addUser(userName, password)){
+            int success = User.addUser(userName, email, password);
+            if(success == 0){
+                JOptionPane.showMessageDialog(null,"Bilinmeyen bir hata oluştu");
+            }
+            else if(success == 1){
                 textFieldNewUserName.setText(null);
+            }
+            else if(success == 2){
+                textFieldNewUserEmail.setText(null);
+            }
+            else if(success == 3){
                 passwordFieldNewUserPassword.setText(null);
+            }
+            else{
                 textFieldUserName.setText(userName);
                 passwordFieldUserPassword.setText(password);
+                textFieldNewUserName.setText(null);
+                passwordFieldNewUserPassword.setText(null);
             }
+        });
+
+
+        buttonRequestNewPassword.addActionListener(e -> {
+            if(User.existsByEmail(textFieldForgottenPasswordEmail.getText())){
+                if(MailSender.sendMail(Objects.requireNonNull(User.getByEmail(textFieldForgottenPasswordEmail.getText())))){
+                    JOptionPane.showMessageDialog(null, "Yeni şifreniz mail adresinize gönderilmiştir");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Bir hata oluştu\n" +
+                            "Lütfen customer@commun.com adresine mail gönderiniz");
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Bu mail adresine sahip bir kullanıcı bulunmamaktadır");
+            }
+
         });
     }
 }

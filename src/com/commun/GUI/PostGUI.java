@@ -32,6 +32,7 @@ public class PostGUI extends JFrame{
         setResizable(false);
         AAFunctions.setScreen(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AAFunctions.setIcon(this);
         setVisible(true);
         buttonExit.addActionListener(e -> dispose());
         buttonExit.addActionListener(new ActionListener() {

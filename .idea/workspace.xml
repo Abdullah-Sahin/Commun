@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Commun:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c49bc6ac-cef7-4f2f-841d-8de19ab9111d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="c49bc6ac-cef7-4f2f-841d-8de19ab9111d" name="Changes" comment="i hope some day i'll learn to edit gitignore :)">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/activation.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/MailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Commun.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Commun.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/DBConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/Funtions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/CreatePostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/CreatePostGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/LoginGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/LoginGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UpdatePostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UpdatePostGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/Post.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/AAHELPER/AAFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/AAFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/AAHELPER/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/PostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/PostGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/MODELS/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/MODELS/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/MODELS/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/MODELS/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +130,14 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Yardımcı Unsurlar/mysql-connector-java-8.0.28/mysql-connector-java-8.0.28.jar" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -125,6 +169,14 @@
       <option name="presentableId" value="Default" />
       <updated>1649702589535</updated>
     </task>
+    <task id="LOCAL-00001" summary="i hope some day i'll learn to edit gitignore :)">
+      <created>1649891767810</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1649891767810</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,5 +189,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="i hope some day i'll learn to edit gitignore :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="i hope some day i'll learn to edit gitignore :)" />
   </component>
 </project>
