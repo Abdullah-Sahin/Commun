@@ -12,8 +12,8 @@ import java.util.Properties;
 
 public class MailSender {
 
-    private static final String communMail = "oornekmail@gmail.com";
-    private static final String communPassword = "Aa666666*";
+    private static final String communMail = "communforcommunity@gmail.com";
+    private static final String communPassword = "communba4146";
 
     private static Properties setProperties(){
         Properties properties = new Properties();
@@ -33,21 +33,13 @@ public class MailSender {
         });
     }
 
-    private static String setNewPassword(){
-        StringBuilder newPassword = new StringBuilder();
-        for(int index = 0; index < 8; index++){
-            newPassword.append((Math.round(Math.random() * 9)));
-        }
-        return newPassword.toString();
-    }
-
     private static Message setMessage(Session session, String receipentMail, String newPassword){
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(communMail));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(receipentMail));
-            message.setSubject("COMMUN PAROLA YENİLEME");
-            message.setText("Merhaba "+ Objects.requireNonNull(User.getByEmail(receipentMail)).getUsername()+"\nYeni Parolanız:\t" + newPassword);
+            message.setSubject("COMMUN PAROLA");
+            message.setText("Merhaba "+ Objects.requireNonNull(User.getByEmail(receipentMail)).getUsername()+"\nParolanız:\t" + newPassword);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -57,7 +49,7 @@ public class MailSender {
 
     public static boolean sendMail(User user){
         try {
-            String newPassword = setNewPassword();
+            String newPassword = User.setNewPassword();
             String sql = "update users set password = ? where email = ?";
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
             preparedStatement.setString(1, newPassword);
@@ -69,9 +61,26 @@ public class MailSender {
                 Transport.send(message);
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | MessagingException e) {
             e.printStackTrace();
-        } catch (MessagingException e) {
+        }
+        return false;
+    }
+
+    public static boolean sendMail(User user, String newPassword){
+        try {
+            String sql = "update users set password = ? where email = ?";
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, user.getEmail());
+            if(preparedStatement.executeUpdate() != -1){
+                Properties properties = setProperties();
+                Session session = setSession(properties);
+                Message message = setMessage(session, user.getEmail(), newPassword);
+                Transport.send(message);
+                return true;
+            }
+        } catch (SQLException | MessagingException e) {
             e.printStackTrace();
         }
         return false;

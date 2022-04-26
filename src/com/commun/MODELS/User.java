@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 
 public class User {
 
@@ -22,10 +21,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.coins = 200;
     }
 
     public int getUserid() {
@@ -176,11 +175,12 @@ public class User {
             flag = 3;
         }
         else{
-            String query = "insert into users (userid, username, password, coins) Values (null, ?, ?, 200)";
+            String query = "insert into users (userid, username, email, password, coins) Values (null,?, ?, ?, 200)";
             try {
                 PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
                 preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
+                preparedStatement.setString(2, email);
+                preparedStatement.setString(3, password);
                 preparedStatement.execute();
                 preparedStatement.close();
                 JOptionPane.showMessageDialog(null, "Kayıt Başarılı");
@@ -346,5 +346,18 @@ public class User {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String setNewPassword(){
+        StringBuilder newPassword = new StringBuilder();
+        String alphabetL = "abcdefghijklmnoprstuvwxyz";
+        String alphabetU = alphabetL.toUpperCase();
+        String numbers = "0123456789";
+        String others = "!%?*+-";
+        String all = alphabetU + alphabetL + numbers + others;
+        for(int index = 0; index < 8; index++){
+            newPassword.append(all.charAt((int)Math.floor(Math.random() * all.length())));
+        }
+        return newPassword.toString();
     }
 }

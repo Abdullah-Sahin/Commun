@@ -28,7 +28,7 @@ public class LoginGUI extends JFrame{
     private JButton buttonRequestNewPassword;
     private JLabel labelForgotPassword;
     private JLabel labelAskEmail;
-    private JLabel labelNewUserPass;
+    private JLabel labelPasswordSending;
     private JTextField textFieldNewUserEmail;
 
     public LoginGUI() {
@@ -67,7 +67,7 @@ public class LoginGUI extends JFrame{
         buttonSignUp.addActionListener(e -> {
             String userName = textFieldNewUserName.getText();
             String email = textFieldNewUserEmail.getText();
-            String password = passwordFieldNewUserPassword.getText();
+            String password = User.setNewPassword();
             int success = User.addUser(userName, email, password);
             if(success == 0){
                 JOptionPane.showMessageDialog(null,"Bilinmeyen bir hata oluştu");
@@ -82,10 +82,16 @@ public class LoginGUI extends JFrame{
                 passwordFieldNewUserPassword.setText(null);
             }
             else{
+                if(MailSender.sendMail(Objects.requireNonNull(User.getByUserName(userName)), password)){
+                    JOptionPane.showMessageDialog(null, "Şifreniz mail adresinize gönderildi");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "mail gönderilemedi");
+                }
                 textFieldUserName.setText(userName);
                 passwordFieldUserPassword.setText(password);
                 textFieldNewUserName.setText(null);
-                passwordFieldNewUserPassword.setText(null);
+                textFieldNewUserEmail.setText(null);
             }
         });
 

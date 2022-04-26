@@ -6,39 +6,14 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c49bc6ac-cef7-4f2f-841d-8de19ab9111d" name="Changes" comment="i hope some day i'll learn to edit gitignore :)">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/activation.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/MailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="c49bc6ac-cef7-4f2f-841d-8de19ab9111d" name="Changes" comment="E-Mail sending for password added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Commun.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Commun.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/DBConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/AAHELPER/Funtions.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/CreatePostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/CreatePostGUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/LoginGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/LoginGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UpdatePostGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UpdatePostGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/UserSettingsGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/Post.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/Post.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/GUI/PostGUI$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/MODELS/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Commun/com/commun/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Commun/com/commun/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/AAHELPER/AAFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/AAFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/AAHELPER/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/CreatePostGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/commun/AAHELPER/MailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/AAHELPER/MailSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/LoginGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/PostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/PostGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UpdatePostGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/GUI/UserSettingsGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/commun/MODELS/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/MODELS/Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/commun/MODELS/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/MODELS/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/commun/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/commun/Main.java" afterDir="false" />
     </list>
@@ -176,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649891767810</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="E-Mail sending for password added">
+      <created>1650469937602</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1650469937602</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +174,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="i hope some day i'll learn to edit gitignore :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="i hope some day i'll learn to edit gitignore :)" />
+    <MESSAGE value="E-Mail sending for password added" />
+    <option name="LAST_COMMIT_MESSAGE" value="E-Mail sending for password added" />
   </component>
 </project>
