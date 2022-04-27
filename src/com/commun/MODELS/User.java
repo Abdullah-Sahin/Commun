@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class User {
 
@@ -75,7 +76,7 @@ public class User {
 
     // ######################################################################################################################
 
-    public static User getById(int userId){
+    public static User getByUserId(int userId){
         String sql = "select * from users where userid = ?";
         try {
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
@@ -96,8 +97,8 @@ public class User {
         return null;
     }
 
-    public static boolean existsById(int userId){
-        return getById(userId) != null;
+    public static boolean existsByUserId(int userId){
+        return getByUserId(userId) != null;
     }
 
     public static User getByUserName(String userName){
@@ -199,13 +200,13 @@ public class User {
             PreparedStatement ps1 = DBConnection.createInstance().prepareStatement(sql1);
             ps1.setInt(1, this.getUserid());
             if(ps1.executeUpdate() != -1){
-                    PreparedStatement ps2 = DBConnection.createInstance().prepareStatement(sql2);
-                    ps2.setInt(1, this.getUserid());
-                    if(ps2.executeUpdate() != -1){
-                        JOptionPane.showMessageDialog(null,"Kullanıcı başarıyla silindi");
-                        ps2.close();
-                        return true;
-                    }
+                PreparedStatement ps2 = DBConnection.createInstance().prepareStatement(sql2);
+                ps2.setInt(1, this.getUserid());
+                if(ps2.executeUpdate() != -1){
+                    JOptionPane.showMessageDialog(null,"Kullanıcı başarıyla silindi");
+                    ps2.close();
+                    return true;
+                }
                 else {
                     JOptionPane.showMessageDialog(null,"Kullanıcı silinemedi");
                 }
@@ -241,7 +242,7 @@ public class User {
     //KONTROL ET
     public boolean createPost(String location, String request, LocalDateTime deadline, int reward){
         String query = "insert into posts (postid, posterid, location, request, deadline, reward, claimerid, completed, rating) Values (null,?, ?, ?,?, ?, ?, ?, ?)";
-        if(AAFunctions.balanceCheck(this, reward)){
+        if(!AAFunctions.balanceCheck(this, reward)){
             JOptionPane.showMessageDialog(null, "Yetersiz Bakiye");
         }
         else if(!AAFunctions.timeCheck(deadline)){
@@ -258,10 +259,13 @@ public class User {
                 preparedStatement.setString(6, "0");
                 preparedStatement.setString(7, "false");
                 preparedStatement.setString(8, "0");
-                preparedStatement.execute();
-                preparedStatement.close();
-                JOptionPane.showMessageDialog(null,"İlan başarıyla yayınlandı");
-                return true;
+                if(preparedStatement.executeUpdate() != -1){
+                    JOptionPane.showMessageDialog(null, "İlan başarıyla yayınlandı");
+                    return true;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "İlan DB e atılamadı");
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Post ilanında hata");
                 e.printStackTrace();
@@ -271,12 +275,12 @@ public class User {
     }
 
     public void claimPostByPostId(int postId){
-        if(Post.getByPostId(postId) == null){
+        if(!Post.existsByPostId(postId)){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir ilan bulunmamaktadır");
         }
         else{
             Post post = Post.getByPostId(postId);
-            if(post.getPosterId()==getUserid()){
+            if(Objects.requireNonNull(post).getPosterId()==getUserid()){
                 JOptionPane.showMessageDialog(null, "Kendi ilanınızı alamazsınız");
             }
             else if(post.getClaimerId() > 0){
@@ -300,10 +304,10 @@ public class User {
     }
 
     public void withdrawClaimByPostId(int postId){
-        if(Post.getByPostId(postId) == null){
+        if(!Post.existsByPostId(postId)){
             JOptionPane.showMessageDialog(null,"Bu id ile eşleşen bir görev bulunmamaktadır");
         }
-        else if(Post.getByPostId(postId).getClaimerId() != getUserid()){
+        else if(Objects.requireNonNull(Post.getByPostId(postId)).getClaimerId() != getUserid()){
             JOptionPane.showMessageDialog(null, "Sizde olmayan bir görevden vazgeçemezsiniz");
         }
         else{
@@ -311,7 +315,7 @@ public class User {
             try {
                 PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);
                 preparedStatement.setInt(1, postId);
-                if(LocalDateTime.now().plusHours(2).isAfter(Post.getByPostId(postId).getDeadline())){
+                if(LocalDateTime.now().plusHours(2).isAfter(Objects.requireNonNull(Post.getByPostId(postId)).getDeadline())){
                     JOptionPane.showMessageDialog(null, "Bitişe iki saatten az varsa görevi bırakamazsınız");
                 }
                 else{
@@ -330,7 +334,7 @@ public class User {
         }
     }
 
-    public boolean updatePasswordOnDB(){
+    public boolean updatePassword(){
         String query = "update users set password = ? where userid = ?";
         try {
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(query);

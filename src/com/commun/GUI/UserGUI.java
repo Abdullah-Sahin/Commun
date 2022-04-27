@@ -6,8 +6,6 @@ import com.commun.MODELS.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Objects;
 
@@ -147,27 +145,27 @@ public class UserGUI extends JFrame{
             }catch (Exception ignore){
 
             }
-            setModelOpenPosts(Post.getFilteredPosts(location, minPrice, maxPrice));
+            setModelOpenPosts(Post.getOpenFilteredPosts(location, minPrice, maxPrice));
         });
         buttonClaimDuty.addActionListener(e -> {
             Post post = Post.getByPostId(Integer.parseInt(textFieldChosenPostId.getText()));
-            user.claimPostByPostId(post.getPostId());
+            user.claimPostByPostId(Objects.requireNonNull(post).getPostId());
             setModelOpenPosts();
             setModelMyJobs();
         });
         buttonInspect.addActionListener(e -> {
             Post post = Post.getByPostId(Integer.parseInt(textFieldChosenPostId.getText()));
-            new PostGUI(post);
+            new PostGUI(Objects.requireNonNull(post));
         });
         buttonCompleted.addActionListener(e -> {
             try{
                 Post post = Post.getByPostId(Integer.parseInt(textFieldPostId.getText()));
-                post.setRating(Integer.parseInt(Objects.requireNonNull(comboBoxRating.getSelectedItem()).toString()));
-                post.updateStatus();
+                Objects.requireNonNull(post).setRating(Integer.parseInt(Objects.requireNonNull(comboBoxRating.getSelectedItem()).toString()));
                 post.updateRating();
-                int coins = post.getReward() * (post.getRating()/5);
-                User claimer = User.getById(post.getPosterId());
-                claimer.setCoins(claimer.getCoins() + coins);
+                post.updateStatus();
+                int coins = (post.getReward() * (post.getRating())) / 5;
+                User claimer = User.getByUserId(post.getPosterId());
+                Objects.requireNonNull(claimer).setCoins(claimer.getCoins() + coins);
                 claimer.updateCoins();
                 user.setCoins(user.getCoins() - coins);
                 setTextFieldUserCoin();
@@ -181,10 +179,10 @@ public class UserGUI extends JFrame{
             try{
                 Post post = Post.getByPostId(Integer.parseInt(textFieldPostId.getText()));
                 if(Objects.requireNonNull(comboBoxToDo.getSelectedItem()).toString().equalsIgnoreCase("ilanı güncelle")){
-                    new UpdatePostGUI(this, post);
+                    new UpdatePostGUI(this, Objects.requireNonNull(post));
                 }
                 else{
-                    post.delete();
+                    Objects.requireNonNull(post).delete();
                     setModelMyPosts();
                     setModelOpenPosts();
                 }
@@ -193,13 +191,10 @@ public class UserGUI extends JFrame{
             }
 
         });
-        buttonWithdraw.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                user.withdrawClaimByPostId(Integer.parseInt(textFieldChosenDutyId.getText()));
-                setModelOpenPosts();
-                setModelMyJobs();
-            }
+        buttonWithdraw.addActionListener(e -> {
+            user.withdrawClaimByPostId(Integer.parseInt(textFieldChosenDutyId.getText()));
+            setModelOpenPosts();
+            setModelMyJobs();
         });
     }
 

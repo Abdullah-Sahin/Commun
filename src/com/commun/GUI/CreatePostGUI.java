@@ -51,7 +51,11 @@ public class CreatePostGUI extends JFrame{
                 int day = Integer.parseInt(Objects.requireNonNull(comboBoxDay.getSelectedItem()).toString());
                 int hour = Integer.parseInt(Objects.requireNonNull(comboBoxHour.getSelectedItem()).toString());
                 LocalDateTime deadline = LocalDateTime.of(year,month,day,hour,0);
-                user.createPost(location, request, deadline, reward);
+                if(user.createPost(location, request, deadline, reward)){
+                    userGUI.setModelMyPosts();
+                    userGUI.setModelOpenPosts();
+                    dispose();
+                }
             }
         });
         buttonLogout.addActionListener(e -> dispose());

@@ -48,7 +48,7 @@ public class UserSettingsGUI extends JFrame{
             else{
                 user.setPassword(textFieldUserPassword.getText().trim());
                 setTextFieldUserPassword();
-                if(user.updatePasswordOnDB()){
+                if(user.updatePassword()){
                     dispose();
                 }
             }

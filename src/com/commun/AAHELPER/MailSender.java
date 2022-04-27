@@ -54,7 +54,7 @@ public class MailSender {
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
             preparedStatement.setString(1, newPassword);
             preparedStatement.setString(2, user.getEmail());
-            if(preparedStatement.executeUpdate() == 1){
+            if(preparedStatement.executeUpdate() != -1){
                 Properties properties = setProperties();
                 Session session = setSession(properties);
                 Message message = setMessage(session, user.getEmail(), newPassword);

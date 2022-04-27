@@ -1,6 +1,5 @@
 package com.commun.MODELS;
 
-import com.commun.AAHELPER.AAFunctions;
 import com.commun.AAHELPER.DBConnection;
 
 import javax.swing.*;
@@ -11,8 +10,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.commun.MODELS.User.existsById;
 
 public class Post {
 
@@ -113,32 +110,6 @@ public class Post {
     }
 
     //####################################################################################################3
-
-    public static Post getByPostId(int postId){
-        String sql = "select from posts where postid = ?";
-        try {
-            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
-            preparedStatement.setInt(1, postId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            Post post = new Post();
-            post.setPostId(resultSet.getInt("postid"));
-            post.setPosterId(resultSet.getInt("posterid"));
-            post.setLocation(resultSet.getString("location"));
-            post.setRequest(resultSet.getString("request"));
-            post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
-            post.setReward(resultSet.getInt("reward"));
-            post.setClaimerId(resultSet.getInt("claimerid"));
-            post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
-            post.setRating(resultSet.getInt("rating"));
-            preparedStatement.close();
-            return post;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static List<Post> getAllPosts(){
         List<Post> allPosts = new ArrayList<>();
         String query = "select * from posts order by deadline asc";
@@ -190,9 +161,38 @@ public class Post {
         return openPosts;
     }
 
+    public static Post getByPostId(int postId){
+        String sql = "select * from posts where postid = ?";
+        try {
+            PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
+            preparedStatement.setInt(1, postId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            Post post = new Post();
+            post.setPostId(resultSet.getInt("postid"));
+            post.setPosterId(resultSet.getInt("posterid"));
+            post.setLocation(resultSet.getString("location"));
+            post.setRequest(resultSet.getString("request"));
+            post.setDeadline(resultSet.getTimestamp("deadline").toLocalDateTime());
+            post.setReward(resultSet.getInt("reward"));
+            post.setClaimerId(resultSet.getInt("claimerid"));
+            post.setCompleted(Boolean.getBoolean(resultSet.getString("completed")));
+            post.setRating(resultSet.getInt("rating"));
+            preparedStatement.close();
+            return post;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean existsByPostId(int postId){
+        return getByPostId(postId) != null;
+    }
+
     public static List<Post> getOpenPostsByPosterId(int userid){
         List<Post> openPosts = new ArrayList<>();
-        String sql = "select * from posts where (userid = ? and completed = ?)";
+        String sql = "select * from posts where (posterid = ? and completed = ?)";
         try {
             PreparedStatement preparedStatement = DBConnection.createInstance().prepareStatement(sql);
             preparedStatement.setInt(1, userid);
@@ -276,7 +276,7 @@ public class Post {
         return posts;
     }
 
-    public static List<Post> getByLocation(String location){
+    public static List<Post> getOpenPostsByLocation(String location){
         List<Post> posts = new ArrayList<>();
         String sql = "select * from posts where (location = ? and completed = ?)";
         try {
@@ -305,13 +305,13 @@ public class Post {
         return posts;
     }
 
-    public static List<Post> getFilteredPosts(String location, int minPrice, int maxPrice){
+    public static List<Post> getOpenFilteredPosts(String location, int minPrice, int maxPrice){
         List<Post> filteredposts = new ArrayList<>();
         if(location.equalsIgnoreCase("hepsi") && minPrice == 0 && maxPrice == 0){
             return getOpenPosts();
         }
         else if(minPrice == 0 && maxPrice == 0){
-            return getByLocation(location);
+            return getOpenPostsByLocation(location);
         }
         else if(location.equalsIgnoreCase("hepsi")){
             String sql = "select * posts where (reward >= ? and reward <= ?)";
@@ -366,8 +366,8 @@ public class Post {
         return filteredposts;
     }
 
-    public void updateDeadlineOnDB(LocalDateTime newDeadline){
-        if(!existsById(getPostId())){
+    public void updateDeadline(LocalDateTime newDeadline){
+        if(!existsByPostId(getPostId())){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
@@ -384,8 +384,8 @@ public class Post {
         }
     }
 
-    public void  updateRewardOnDB(int newReward){
-        if(!existsById(getPostId())){
+    public void  updateReward(int newReward){
+        if(!existsByPostId(getPostId())){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
@@ -402,8 +402,8 @@ public class Post {
         }
     }
 
-    public void updateRequestOnDB(String newRequest){
-        if(!existsById(getPostId())){
+    public void updateRequest(String newRequest){
+        if(!existsByPostId(getPostId())){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
         }
         else{
@@ -421,7 +421,7 @@ public class Post {
     }
 
     public void updateStatus(){
-        if(!existsById(postId)){
+        if(!existsByPostId(postId)){
             JOptionPane.showMessageDialog(null,"Bu ID'ye sahip bir ilan bulunmamaktadır");
         }
         else{
@@ -439,8 +439,8 @@ public class Post {
     }
 
     public void updateRating() {
-        if (!existsById(postId)) {
-            JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır");
+        if (!existsByPostId(postId)) {
+            JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir ilan bulunmamaktadır");
         } else {
             String query = "update posts set rating = ? where postid = ?";
             try {
@@ -456,7 +456,7 @@ public class Post {
     }
 
     public void delete(){
-        if(getByPostId(postId) == null){
+        if(!existsByPostId(postId)){
             JOptionPane.showMessageDialog(null, "Bu id'ye sahip bir post bulunmamaktadır.");
         }
         else{

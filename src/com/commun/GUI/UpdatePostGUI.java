@@ -55,9 +55,9 @@ public class UpdatePostGUI extends JFrame{
             int hour = Integer.parseInt(Objects.requireNonNull(comboBoxHour.getSelectedItem()).toString());
             LocalDateTime deadline = LocalDateTime.of(year,month,day,hour,0);
             if(AAFunctions.timeCheck(deadline) && AAFunctions.balanceCheck(userGUI.getUser(), reward, post.getPostId())){
-                post.updateDeadlineOnDB(deadline);
-                post.updateRequestOnDB(textAreaRequest.getText());
-                post.updateRewardOnDB(Integer.parseInt(Objects.requireNonNull(comboBoxReward.getSelectedItem()).toString()));
+                post.updateDeadline(deadline);
+                post.updateRequest(textAreaRequest.getText());
+                post.updateReward(Integer.parseInt(Objects.requireNonNull(comboBoxReward.getSelectedItem()).toString()));
                 userGUI.setModelMyPosts();
                 userGUI.setModelOpenPosts();
                 dispose();
